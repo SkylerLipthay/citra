@@ -4,8 +4,15 @@ os:
 
 language: cpp
 
+env:
+  global:
+    secure: <to be determined>
+
 before_install:
  - sh .travis-deps.sh
 
 script:
  - sh .travis-build.sh
+
+after_success:
+ - sh .travis-upload.sh
