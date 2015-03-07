@@ -7,7 +7,7 @@ clone_depth: 5
 environment:
   QTDIR: C:\Qt\5.4\msvc2013_64_opengl
   BUILD_PASSWORD:
-    secure: <to be determined>
+    secure: EXGNlWKJsCtbeImEJ5EP9qrxZ+EqUFfNy+CP61nDOMA=
 
 platform:
   - x64
@@ -37,8 +37,8 @@ after_build:
   - copy C:\Qt\5.4\msvc2013_64_opengl\plugins\platforms\qwindows.dll build\bin\release\platforms
   
   - ps: >
-        if (!"$env:APPVEYOR_PULL_REQUEST_TITLE" -and ("$env:APPVEYOR_REPO_BRANCH" -eq "master"))
-          {
+        #if (!"$env:APPVEYOR_PULL_REQUEST_TITLE" -and ("$env:APPVEYOR_REPO_BRANCH" -eq "master"))
+          #{
             $BUILD_NAME_UNCUT = git show -s --pretty=format:%h-%f.7z | Out-String
             $BUILD_NAME = $BUILD_NAME_UNCUT.Substring(0, [System.Math]::Min(111, $BUILD_NAME_UNCUT.Length)) -replace "`n|`r",""
             # zip up the build folder
@@ -50,4 +50,4 @@ after_build:
             
             # upload to server
             .\WinSCP.com /command "option batch abort" "option confirm off" "open sftp://builds:${env:BUILD_PASSWORD}@builds.citra-emu.org -hostkey=*" "put $BUILD_NAME /citra/nightly/windows/" "exit"
-          }
+          #}
